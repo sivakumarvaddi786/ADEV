@@ -1,0 +1,32 @@
+umount /home
+$ umount /home
+
+shrink the /home filesystem
+$ fsck -f /dev/mapper/VolGroup-lv_home
+$ resize2fs /dev/mapper/VolGroup-lv_home 80G
+
+shrink the /home logical volume
+$ lvreduce -L -40G /dev/mapper/VolGroup-lv_home
+
+resize the /home partition to the size of the LV
+$ resize2fs /dev/mapper/VolGroup-lv_home
+
+extend the /root logical volume
+$ lvextend -L +40G /dev/mapper/VolGroup-lv_root
+
+extend the /root filesystem
+$ fsck -f /dev/mapper/VolGroup-lv_root
+
+$ resize2fs /dev/mapper/VolGroup-lv_root
+
+mount /home
+$ mount /home
+
+
+umount /home
+e2fsck -f /dev/mapper/vg_oracle-lv_home
+resize2fs /dev/mapper/vg_oracle-lv_home 20G
+lvreduce -L 20G /dev/mapper/vg_oracle-lv_home
+lvextend -l +100%FREE /dev/mapper/vg_oracle-lv_root
+resize2fs /dev/mapper/vg_oracle-lv_root
+mount /home
