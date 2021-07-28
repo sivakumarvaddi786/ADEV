@@ -1,1 +1,45 @@
+1) What is CI/CD Pipeline? Why to use it? When to use it?
 
+CI/CD is a set of best practices of DevOps that ensures to deliver code changes very frequently in a reliable way. Let's discuss CI/CD and CD.
+
+Continuous Integration (CI): Continuous Integration is a process where developers work on code changes and commit the code very frequently to repository. 
+CI triggers the build every time whenever new code changes detected in repository. 
+Unit testing is performed against these code changes every time. 
+CI enables to detect the errors at early stage or when code is being integrated. 
+CI is a set of principles that helps developers to manage code integrations and detect early stage bugs and rectify them.
+
+Continuous Delivery (CD) - Continuous Delivery is a process where integrated code is pushed to specific environments.
+It ensures code delivery to specified infrastructure environment. 
+It starts after continuous integration. CD ensures the automation of delivering new code with minimum efforts. 
+Some extra checks are also performed during CD process such as performance test for production environment.
+
+Continuous Deployment (CD) - Continuous deployment is most critical stage in pipeline. 
+In this process code changes are automatically deployed to production environment where end customers or users are using the application. 
+It is achieved by taking the benefit of continuous delivery by automating new stage (Production) in the pipeline.
+There is very less human interaction at this stage and it helps to reduce delay in making code changes live.
+
+
+2)What are the advantages of CI/CD Pipeline?
+
+Continuous Integration and Continuous delivery comes with certain benefits Which will help you to decide to opt for CI/CD for your organization.
+
+CI/CD allows you to integrate small code changes very quickly and the code changes can be tested easily.
+
+Fault isolation is faster and easier for properly designed systems with CI/CD setup. Fault isolation includes monitoring the system
+fault occurrence time and triggering the location of fault.
+
+CI/CD provides fast MTTR (Mean time to resolution) as changes are smaller and easier.
+
+Unit Testing and Integrations Testing reliability improves with CI/CD setup.
+CI/CD setup provides faster release rate as it merges the small code changes very quickly and make the code ready for production.
+
+
+What do you understand by fully automated CI/CD (Continuous Deployment) Pipeline?
+
+A fully automated pipeline is one, that provides the capability to deploy new developer changes to production or any non-production environment with seamless experience and without human intervention. A fully automated pipeline may consist of many stages as below. Once developer commits the code changes then no human intervention is required.
+
+Commit new changes - Developer commits new code changes to source code manager.
+Build - Latest changes are build and artifacts are created on server.
+Tests - Unit Tests or Integration testing is performed on server.
+Deploy - The Latest build version is deployed.
+CI helps to find early stage failure like merge issues, build failure, integration test failure etc. that will improve transparency within team. CD helps to make code available to end users.
