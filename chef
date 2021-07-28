@@ -1,1 +1,19 @@
 Chef commands
+# m h dom mon dow user command
+*/15 * * * * root chef-client -l warn | grep -v 'retrying [1234]/5 in'
+
+
+https://medium.com/@pierangelo1982/how-to-install-a-jenkins-docker-image-with-chef-40baf6331c74
+
+https://docs.chef.io/knife_bootstrap.html
+
+knife bootstrap 127.0.0.1 --ssh-port 2200 --ssh-user myuser --sudo --identity-file /my/path/private_key -N nameofYourMachine
+
+now add the mydocker cookbook to your node:
+knife node run_list add nameOfYourNode "recipe[mydocker]"
+
+From terminal, connected in ssh at your machine, launch chef-client command:
+
+sudo chef-client
+
+echo "test job"
