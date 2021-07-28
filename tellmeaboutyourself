@@ -1,0 +1,58 @@
+https://www.youtube.com/watch?v=WxjJlYFIWtI
+
+“Honestly, I had the opportunity to work with the most amazing team and colleagues possible.
+
+Not only did they treat me like an equal despite being a fresher, but they also helped me learn and guided me whenever I required a little help.
+
+But after working there for 3 years now, I am looking forward to a fresh set of challenges and the job profile offered by you seems perfect.
+
+It would help me to push my limits and get out of my comfort zone and I am sure I will be able to add value to the team as well.”
+
+
+
+Manage Team of 4
+
+Support Test environment in AWS
+- create and automate Instances in Jenkins environment.
+- help with access enabling port and network issue.
+
+Administrating and managing Electric commander Instance
+- ACL
+- Project and Procedure issues
+- Debug issue related to EC
+- Work with Vendor on Issues
+- Monitoring the services and enabling alerts
+- Daily reports
+- Stats of the service
+- Performance fine tuning
+
+Support Build farm of 500+ servers (LINUX and Windows)
+Bring up machine to production using scripts and Chef recipes
+Support build related Issues
+Track issues via JIRA
+Enabling Alerts
+
+Follow Agile process for new requirements and deployments
+
+Support Docker environment and related issues with docker repository.
+
+
+Maintenance:
+- Patching Linux Machines
+- Coordinate with Windows for patching machines
+- Restarting EC servers during maintenance
+- Test service and build machines before handover the servers to Engineering folks.
+
+
+
+Infra maintenance:
+Upgrade OS
+test cases
+Decommissions old servers
+Procure New machines.
+Rollback Strategy
+green-deployment -- one after the other 50/50
+hot deployment  -- redirect to similar instance and move back after deployments.
+
+
+On-Call
