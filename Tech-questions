@@ -1,3 +1,10 @@
+That’s where fetch and pull come in.
+
+git fetch is the command that tells your local git to retrieve the latest meta-data info from the original (yet doesn’t do any file transferring. It’s more like just checking to see if there are any changes available).
+
+git pull on the other hand does that AND brings (copy) those changes from the remote repositor
+
+
 cat file 
 1 2 3
 4 5 6
