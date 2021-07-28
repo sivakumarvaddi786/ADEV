@@ -1,0 +1,132 @@
+What is Devops?
+
+Simplyfy the release process with fast release with high quality and reliability.
+Planning ==> Code ==> Build ==> Test ==> Release ==> Deploy ==> Operate ==> Monitoring
+
+
+Agile vs Devops
+Agile(scrum) is framework.
+scrum defines development activity as sprint or iteratability.
+Frame work is defined and development practices fits into the framework.
+
+Devops is Practive
+ENDTOEND SDLC life cycle.
+Development ==> Testing ==> Operations ==> Production support.
+Each organisation has the Devops practices defined uniquely to meet the needs of the organiation.
+
+
+Why Devops?
+Dev + Ops
+Increase the Deploymnet frequency.
+Low failure rate of new instance.
+Shortened lead time between fixes.
+faster mean time to recovery in the event of new release failure.
+
+
+Devops Tools?
+Git - Distributed version control system SVN: client server based system.
+Jenkins
+chef, puppet, Ansible (Provisions the testing and production servers)
+Docker containers provide the consistent computing environmnet throughout the Software Development Life Cycle (SDLC)
+
+
+Git commands:
+git config -l
+git add flle
+git commit -m "commit message"(commit a message)
+git push
+git revert "bad commit" (revet the commit)
+git diff--tree -r {hash}    (list all the files that changed or added in that commit)
+git diff--tree --no-commit-id --name-only -r {hash}
+git reset --soft HEAD~N && (squash last N commits)
+git commit
+git reset --soft HEAD~N &&
+git commit --edit -m "$(git log --format=%B --reverse .HEAD@{N})"
+
+
+Continious Interation:
+new commit  ==> compiled ==> build ==> Deploy(integrated).
+
+Continious Deployment:
+
+Continious Delevery:
+
+Name some Jenkins Plugins
+
+Git Plugin
+SSH Plugin
+Build Pipeline Plugin
+Email-ext Plugin
+HTML Publisher Plugin
+Multi-slave  config plugins
+Parameterized Trigger Plugin
+
+
+
+Jenkins Security?
+Ensure Global Security is ON.
+Ensure Jenkins is integrated with Company AD server.
+Ensure that matrix/Project Matrix is enabled to fine tune access.
+Automate the process of setting rights/privilages in jenkins with custom version controlled script.
+Limit Physical access to Jenkins data/folders
+periodically run scripts audits on same.
+
+
+BackUp and Copy?
+Move jobs folder from Old to New Jenkins Server.
+Make a copy of an existing job by making a clone of a job birectory by a different name.
+Rename the existing job by renaming a directory. Note that if any change to a job name you will need to change any other job that tries to call the renamed job.
+
+
+Configuration Management?
+Configuration Identification
+Change Management
+Configuration Status Accounting
+Configuration Audits.
+
+
+Diff Asset Management VS Configuration Management?
+
+
+
+Infrastructure as Code(Iac)?
+Automation of IT Operations(build, Deploy & Manage) by Provisioning Code, rather than Manual Process
+
+Code for the Infrastructure (DEV, TEST & PROD)
+
+Provisioning of Dev, Test and Prod environment by writing code in one centralized location. 
+
+
+
+Chef Architecture:
+Chef Server: Cetralized server to store the configuration 
+
+Chef Node: Systems Managed by Chef are called Nodes.
+          Chef client runs on the node, retriving configuration from chef server.
+	  Chef client and Knife use API clients to talk to the chef server.
+          Chef Node can be cloud based, Virual or Physical machine in Data Center.
+
+Chef Workstation: Machine with local chef repository & properly configured Knife.
+                  All the configuration firsted tested in the workstation and then pushed to Chef Server
+
+Knife: Used to upload configuration to Chef server.Knife is used to communicate with Nodes using SSH
+
+Cookbook: Is a code chef language. what packaged to be deployed, folder or configuration required.
+Cookbook has metadata and configuration to install packages.
+
+package 'httpd'
+service 'httpd' do
+action [:enable, :start]
+end
+
+file '/var/www/html/index.html' do
+action :create
+content 'Welcome to Chef'
+end
+
+Chef testing: Chef inspect or kitchen testing tools.
+
+
+
+Ansible Architecture
+Inventory ==> Playbook (Modules API Plugins)

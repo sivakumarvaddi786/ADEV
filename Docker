@@ -1,0 +1,123 @@
+sivavadd@sivavadd1-linux:~$ cat /etc/docker/daemon.json
+{
+        "dns": ["10.4.27.7", "8.8.8.8"]
+        "metrics-addr" : "127.0.0.1:9323",
+        "experimental" : true
+}
+
+
+root@sivavadd1-linux:~# cat Dockerfile
+FROM permissions
+WORKDIR /app
+ENTRYPOINT ["python3", "lb.py"]
+
+root@sivavadd1-linux:~# docker login
+Authenticating with existing credentials...
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+docker ps -a --no-trunc
+docker rm $(docker ps --filter status=exited -q)
+docker run -itd -p 8080:8080 -p 50000:50000 --name jenkins-server --hostname jenkins -v /local/mnt/workspace/docker_volume:/var/jenkins_home jenkins/jenkins:lts
+docker exec -it  -u 0 slave /bin/bash
+docker images
+docker commit sivakumarvaddi/jenkins-slave
+docker ps -a
+docker commit slave (running container)
+docker images
+docker tag 49bf55a9a34f sivakumarvaddi/jenkins-slave:2.0 (Image Id)
+docker push sivakumarvaddi/jenkins-slave:2.0
+
+Set the base image to Ubuntu must be first instruction - use docker search to find images
+
+FROM ubuntu # <image>
+FROM ubuntu:latest # - <image>:<tag>
+FROM ubuntu:precise (LTS)
+Set the maintainer info
+
+MAINTAINER Adam Veldhousen, adam@veldhousen.ninja # <name>
+Copy a local/remote file into the container Also supports auto extracting of .tar.gz into destination and can copy from remote locations (ie raw.github)
+
+ADD ./index.html /var/www/index.html # <src> <dest>
+Prefer copy over add: http://docs.docker.com/articles/dockerfile_best-practices/#add-or-copy Copy only supports copying local files
+
+COPY ./index.html /var/www/index.html
+Sets the user name to use
+
+USER username
+ENV set env vars
+
+ENV KEY 1234 # <key> <value>
+Runs a command on the image and commits the result
+
+RUN apt-get install vim # <command> - equivalent to docker run ubuntu apt-get install vim && docker commit XXXX
+The WORKDIR directive is used to set where the command defined with CMD is to be executed.
+
+WORKDIR /home/dev
+Like an exec, preferred (A minimal $PATH only)
+
+ENTRYPOINT ["executable", "param1", "param2"]
+Execute as a shell (Your $PATH is setup this way)
+
+ENTRYPOINT command param1 param2
+this:
+
+CMD ["-l","-"]
+ENTRYPOINT ["/usr/bin/wc"]
+and this:
+
+ENTRYPOINT wc -l -
+and this:
+
+ENTRYPOINT ["wc", "-l", "-"]
+are all equivalent
+
+Exposes this port on the container to the outside world
+
+EXPOSE 80 # <port> [<port>...]
+Adds one or more new volumes to any container created from the image
+
+VOLUME ["/data"] # [<volumes>...], puts /data -> /var/lib/docker/volumes/
+using boot2docker.md
+If you're using boot2docker, and you would like to access your container via localhost, you can run the following line: VBoxManage controlvm boot2docker-vm natpf1 ",tcp,127.0.0.1,,,"
+
+This adds a port forwarding rule to virtual box that passes the local host traffic through the boot2docker vm and into the container.
+
+using docker cli.md
+To build a dockerfile
+
+docker build # current directory, uses dockerfile in cwd -> docker build . is equivalent
+docker build - < dockerfile # stdin
+docker build github.com/creack/docker-firefox # github
+The -t option tags your image
+
+docker build -t memcached
+To run your image
+
+docker run memcached # run your image
+And this:
+
+docker run -d -p 8080:80 myapp
+Runs your image that you tagged "myapp" in the background (-d) and directs traffic from port 8080 to your container's port 80 (-p 8080:80 AKA :)
+
+use docker ps to list running containers
+
+Run and mount the folder on the host named '/home/adam/data' to a folder in the container accessible at '/data/'
+
+docker run -v /home/adam/data:/data debian ls /data
+Inspect the volumes for running containers
+
+docker inspect -f {{.Volumes}} container-test
+using dockerhub.md
+You either need to tag it as <myuser>/hellodocker when you build it, e g
+
+docker build -t <myuser>/hellodocker:mytag .
+or create a new tag tied to the same image, i e
+
+docker tag hellodocker:mytag <myuser>/hellodocker:mytag
+and then docker push
+
+docker push <myuser>/hellodocker:mytag

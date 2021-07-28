@@ -1,0 +1,194 @@
+ansible -i ./eclist ECTEST -m ping -o
+
+https://www.golinuxcloud.com/ansible-inventory-files/
+
+
+---
+ - name: "First Ansi"
+   hosts: localhost
+   become: true
+   tasks:
+   - name: Installing Git
+     apt:
+       name: "{{ item }}"
+       update_cache: yes
+     with_items:
+         - "git"
+         - "nginx"
+   - name: Install python Modules
+     command: pip install lxml
+
+ansible  pwbld21nov -m ping -o
+ansible myh  -a "sudo apt-get install git -y" -o -b  -K
+ansible multi -m shell -a "cat /etc/passwd|grep -i vagrant" -b -K
+
+
+- name: find out /etc/init.d/splunk file exists or not'
+      stat:
+        path: /etc/init.d/splunk
+      register: splunkresult
+      tags:
+        - always
+
+    - name: 'Remove splunk from init.d file if splunk already running'
+      file:
+        path: /etc/init.d/splunk
+        state: absent
+      when: splunkresult.stat.exists == true
+      ignore_errors: yes
+      tags:
+        - always
+
+
+- name: check filesystem existence
+  shell: if [[ -d  "/folder_name" ]]; then echo "true";  fi
+  register: file_exists
+  
+- name: debug data
+  debug: 
+    msg: "Folder exists"
+  when: file_exists.stdout == "true"
+
+
+
+-hosts: all
+  gather_facts: no
+  tasks:
+    - shell: ps -eo pcpu,user,args | sort -r -k1 | head -n5
+      register: ps
+
+    - debug: var=ps.stdout_lines
+
+
+ansible-playbook extract.yml --syntax-check
+ansible-playbook extract.yml -b -K
+
+
+ansible-doc -l 
+ansible time -m command -a /usr/bin/uptime
+
+
+ansible all -m command -a "docker info" -u myuser --become-user root --ask-pass --ask-become-pass
+
+
+
+---
+ - hosts: all
+   gather_facts: true
+
+   tasks:
+   - name: check existing license bandwidth
+     shell: ascp -A|grep license|awk -F ',' '{print $1}'
+     register: license_rate
+
+#   - name: "Exiting the playbook as the servers are already have latest license file"
+#     meta: end_play
+#     when:
+#       - license_rate.stdout == "License max rate=2500 Mbps"
+
+   - name: copy the latest asp.config file
+     template: src=aspera.conf_hyd_master.j2 dest=/opt/aspera/etc/aspera.conf owner=nsidprd group=root mode=0664
+     when:  ansible_hostname  == "nsid-aspera-hyd-01" or ansible_hostname == "nsid-aspera-hyd-03"
+     become: yes
+
+   - name: copy the latest asp.congif file
+     template: src=aspera.conf_san_master.j2 dest=/opt/aspera/etc/aspera.conf owner=nsidprd group=root mode=0664
+     when:  ansible_hostname  == "nsid-aspera-san-04" or ansible_hostname == "nsid-aspera-san-02"
+     become: yes
+
+   - name: "stop aspera services"
+     service: name="{{ item }}" state=stopped
+     with_items:
+      - asperacentral
+      - asperanoded
+      - asperarund
+     when:
+      - license_rate.stdout != "License max rate=2500 Mbps"
+     become: yes
+
+   - name: unlink existing symlink file
+     file: path=/opt/aspera/etc/aspera-license state=absent
+     when:
+      - license_rate.stdout != "License max rate=2500 Mbps"
+     become: yes
+
+   - name: copy the new license file
+     copy: src=68727-TransferEndpoint-2500M.aspera-license dest=/opt/aspera/etc/68727-TransferEndpoint-2500M.aspera-license owner=root group=root mode=0644
+     when:  ansible_hostname == "nsid-aspera-san-04" or ansible_hostname == "nsid-aspera-san-02"
+     become: yes
+
+   - name: copy the new license file
+     copy: src=68728-TransferEndpoint-2500M.aspera-license dest=/opt/aspera/etc/68728-TransferEndpoint-2500M.aspera-license owner=root group=root mode=0644
+     when:  ansible_hostname  == "nsid-aspera-hyd-01" or ansible_hostname == "nsid-aspera-hyd-03"
+     become: yes
+
+   - name: create new symlink file for the latest license file
+     file: src=/opt/aspera/etc/68728-TransferEndpoint-2500M.aspera-license dest=/opt/aspera/etc/aspera-license state=link
+     when:  ansible_hostname  == "nsid-aspera-hyd-01" or ansible_hostname == "nsid-aspera-hyd-03"
+     become: yes
+
+   - name: create new symlink file for the latest license file
+     file: src=/opt/aspera/etc/68727-TransferEndpoint-2500M.aspera-license dest=/opt/aspera/etc/aspera-license state=link
+     when:  ansible_hostname == "nsid-aspera-san-04" or ansible_hostname == "nsid-aspera-san-02"
+     become: yes
+
+   - name: "start aspera services"
+     service: name="{{ item }}" state=started
+     with_items:
+      - asperacentral
+      - asperanoded
+      - asperarund
+     become: yes
+
+
+
+---
+ - hosts: all
+   gather_facts: false
+   tasks:
+    - name: Download aspera upgrade script as backup option
+      get_url:
+        url: http://hnallabo-linux.qualcomm.com/aspera/asp_upgrade_carlos.py
+        dest: /local/mnt/workspace
+        mode: '0755'
+
+    - name: Run asp_upgrade_carlos.py as root on remote hosts
+      script: asp_upgrade_carlos.py
+      become: yes
+
+
+
+
+- name: Start Zookeeper service
+  command: /opt/zookeeper/bin/zkServer.sh start
+  tags:
+  - start_zookeeper
+
+- name: Validate whether zookeeper service is running or not 
+  shell: netstat -plnt | grep $(ps -ef | grep zookeeper.server.quorum.QuorumPeerMain | grep -v "grep" | awk '{print $2}')
+  args:
+    executable: /bin/bash
+  register: zookeeper_port_status
+  retries: 5
+  delay: 3
+  until: zookeeper_port_status.stdout.find('{{zookeeper_port}}') != -1 
+  tags:
+  - validate_zookeeeper_service
+
+
+
+
+---
+  - name: Search String with lineinfile
+    hosts: web
+
+    tasks:
+      - name: "Searching for a String"
+        become: yes
+        become_user: root
+        register: contentofhttpdconf
+        shell: "cat /etc/httpd/conf/httpd.conf"
+
+      - name: "sample task in case the String present in the file"
+        when: '"LogLevel debug" in contentofhttpdconf.stdout'
+        debug: msg="DEBUG is enabled in Apache Log file"
