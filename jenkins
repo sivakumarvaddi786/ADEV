@@ -1,0 +1,31 @@
+config.xml
+
+Plugins:
+
+1)SSh Publish
+Notification Plugin
+Advanced Notification 
+Authorize Project ==> This plugin allows configuring projects to run with specified authorization.
+Ansible publish ==> run ansible playbooks
+Amazon EC2
+AWS Global Configuration Plugin
+Build Timeout ==> Timeout after elapsed time
+Docker Slaves Plugin ==> Uses Docker containers to run Jenkins build agents.
+
+2)Run agent:
+java -jar /local/mnt/workspace/agent.jar -jnlpUrl http://sivavadd1-linux:8081/computer/sivavadd1-linux/jenkins-agent.jnlp -secret 96d2cd93065e1c25fbbd4e33e1a77dccdbe0bd5812aee1a0e46091a235bc43ce -workDir /local/mnt/workspace/jenkins-root
+
+3)Install Jenkins Plugin
+As per the Jenkins command line interface documentation, you need to use the client JAR file (not the server WAR file you're using), which you can obtain directly from Jenkins, 
+e.g. via the links on http://localhost:8080/cli ,Then you can run the command using this JAR:
+java -jar jenkins-cli.jar -s http://127.0.0.1:8080/ install-plugin <name>
+This will download install the plugin you want, along with any of its dependencies.
+
+wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+java -jar jenkins-cli.jar -auth ${USER}:${PASSWORD} -s ${JENKINSURL} install-plugin ${PLUGIN_NAME}
+
+
+java -jar jenkins-plugin-manager-$version.jar \
+--plugin-download-directory pluginsFolder \
+    --plugin-file plugins.yml \
+    --war jenkins.war
