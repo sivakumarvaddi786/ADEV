@@ -11,6 +11,7 @@ Amazon EC2
 AWS Global Configuration Plugin
 Build Timeout ==> Timeout after elapsed time
 Docker Slaves Plugin ==> Uses Docker containers to run Jenkins build agents.
+Email Extension Plugin
 
 2)Run agent:
 java -jar /local/mnt/workspace/agent.jar -jnlpUrl http://sivavadd1-linux:8081/computer/sivavadd1-linux/jenkins-agent.jnlp -secret 96d2cd93065e1c25fbbd4e33e1a77dccdbe0bd5812aee1a0e46091a235bc43ce -workDir /local/mnt/workspace/jenkins-root
