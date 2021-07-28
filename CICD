@@ -1,3 +1,5 @@
+https://www.fullstack.cafe/blog/15-continuous-integration-interview-questions-in-2018
+
 1) What is CI/CD Pipeline? Why to use it? When to use it?
 
 CI/CD is a set of best practices of DevOps that ensures to deliver code changes very frequently in a reliable way. Let's discuss CI/CD and CD.
@@ -43,3 +45,16 @@ Build - Latest changes are build and artifacts are created on server.
 Tests - Unit Tests or Integration testing is performed on server.
 Deploy - The Latest build version is deployed.
 CI helps to find early stage failure like merge issues, build failure, integration test failure etc. that will improve transparency within team. CD helps to make code available to end users.
+
+
+Explain Blue-Green Deployment Technique
+Mid 
+Top 44 DevOps Interview Questions  DevOps  44  
+Answer
+Blue-green deployment is a technique that reduces downtime and risk by running two identical production environments called Blue and Green. At any time, only one of the environments is live, with the live environment serving all production traffic. For this example, Blue is currently live and Green is idle.
+
+As you prepare a new version of your software, deployment and the final stage of testing takes place in the environment that is not live: in this example, Green. Once you have deployed and fully tested the software in Green, you switch the router so all incoming requests now go to Green instead of Blue. Green is now live, and Blue is idle.
+
+This technique can eliminate downtime due to application deployment. In addition, blue-green deployment reduces risk: if something unexpected happens with your new version on Green, you can immediately roll back to the last version by switching back to Blue.
+
+
