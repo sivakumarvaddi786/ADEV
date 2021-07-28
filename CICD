@@ -58,3 +58,10 @@ As you prepare a new version of your software, deployment and the final stage of
 This technique can eliminate downtime due to application deployment. In addition, blue-green deployment reduces risk: if something unexpected happens with your new version on Green, you can immediately roll back to the last version by switching back to Blue.
 
 
+######
+Serverless refers to a model where the existence of servers is hidden from developers. It means you no longer have to deal with capacity, deployments, scaling and fault tolerance and OS. It will essentially reducing maintenance efforts and allow developers to quickly focus on developing codes.
+
+Examples are:
+
+Amazon AWS Lambda
+Azure Functions
