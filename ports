@@ -1,0 +1,109 @@
+Some FAQ related PORTS
+
+Q. WHAT IS A PORT?
+A port is piece of software which is used as docking point in your machine, where remote application can communicate. This is analogy to the physical ports for entering in to a country from different sea ports.
+
+Q. WHAT IS HARDWARE PORT?
+This is a physical peripheral connecting point to a machine from a physical device.
+
+Q. WHAT IS A SOCKET?
+Socket is combination of software Port and IP address.
+
+Q. WHAT IS THE RANGE OF PORTS OR HOW MANY PORTS ARE THERE?
+Port numbers can vary from 0 to 65535, so total we can get 65536 ports
+
+Q. WHY PORT NUMBERS ARE JUST 65536?
+This is because limitation in TCP/IP stack where the port number field is just 16bit size. So we get only 2^16(2 to the power of 16) ports which are equal to 65536 available ports
+
+Q. WHAT ARE THE WELL-KNOWN PORTS OR ASSIGNED PORTS OR DEFAULT PORTS?
+Well known ports are from 0 to 1023(total 2^10=1024 ports)
+
+Q. WHAT DO YOU MEAN BY DEFAULT PORT?
+Default port is a designated port for particular well-known service such as web server, mail server, ftp server etc. By default FTP uses 21 port, DNS uses 53 and Apache uses 80 port.
+
+Q. CAN WE CHANGE DEFAULT PORT FOR A SERVICE(EXAMPLE APACHE, SQUID)?
+Yes, we can change. In Apache and DNS we can change this using listen configuration entry in httpd.conf and named.conf. Squid have port entry in it’s squid.conf file to mention port number.
+
+Q. WHAT ARE THE PROTOCOL NUMBERS FOR TCP AND UDP?
+Do not confuse this one with port numbers. TCP and UDP have their own numbers in TCP/IP stack.
+
+TCP protocol number: 6
+
+UDP protocol number: 17
+
+Q. IS THERE ANY WAY I CAN SEE ALL THE PORT INFORMATION IN LINUX?
+Yes, you can get that from /etc/services files.
+
+Q. HOW CAN I SEE OPEN PORTS IN LINUX?
+Use nmap command.
+
+WELL KNOWN PORTS
+20 – FTP Data (For transferring FTP data)
+
+21 – FTP Control (For starting FTP connection)
+
+22 – SSH (For secure remote administration which uses SSL to encrypt the transmission)
+
+23 – Telnet (For insecure remote administration)
+
+25 – SMTP (Mail Transfer Agent for e-mail server such as SEND mail)
+
+53 – DNS (Special service which uses both TCP and UDP)
+
+67 – Bootp
+
+68 – DHCP
+
+69 – TFTP (Trivial file transfer protocol uses udp protocol for connection less transmission of data)
+
+80 – HTTP/WWW(Apache)
+
+88 – Kerberos
+
+110 – POP3 (Mail delivery Agent)
+
+123 – NTP (Network time protocol used for time syncing uses UDP protocol)
+
+137 – NetBIOS (nmbd)
+
+139 – SMB-Samba (smbd)
+
+143 – IMAP
+
+161 – SNMP (For network monitoring)
+
+389 – LDAP (For centralized administration)
+
+443 – HTTPS (HTTP+SSL for secure web access)
+
+514 – Syslogd (udp port)
+
+636 – ldaps (both ctp and udp)
+
+873 – rsync
+
+989 – FTPS-data
+
+990 – FTPS
+
+993 – IMAPS
+
+1194 – openVPN
+
+1812 – RADIUS
+
+995 – POP3s
+
+2049 – NFS (nfsd, rpc.nfsd, rpc, portmap)
+
+2401 – CVS server
+
+3306 – MySql
+
+3690 – SVN
+
+6000-6063-X11
+
+Note 1: If protocol(TCP or UDP) is not mention then the above port are solely for TCP. Some service use UDP as mention in above list.
+
+Note 2: X11 use 6000 to 6063.. ports for connecting X11 from remote server.
