@@ -3,6 +3,17 @@ $ umount /home
 
 shrink the /home filesystem
 $ fsck -f /dev/mapper/VolGroup-lv_home
+fdisk -cu /dev/sda
+Create new partition Press n.
+Choose primary partition use p.
+Choose which number of partition to be selected to create the primary partition.
+Press 1 if any other disk available.
+Change the type using t.
+Type 8e to change the partition type to Linux LVM.
+Use p to print the create partition ( here we have not used the option).
+Press w to write the changes.
+
+#########
 $ resize2fs /dev/mapper/VolGroup-lv_home 80G
 
 shrink the /home logical volume
@@ -30,3 +41,11 @@ lvreduce -L 20G /dev/mapper/vg_oracle-lv_home
 lvextend -l +100%FREE /dev/mapper/vg_oracle-lv_root
 resize2fs /dev/mapper/vg_oracle-lv_root
 mount /home
+
+
+
+Reduce/shrink
+
+resize2fs /dev/mapper/vg01-lv002 80G
+lvreduce -L 80G /dev/mapper/vg01-lv002
+e2fsck -f /dev/mapper/vg01-lv002
