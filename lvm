@@ -13,6 +13,15 @@ Type 8e to change the partition type to Linux LVM.
 Use p to print the create partition ( here we have not used the option).
 Press w to write the changes.
 
+
+https://www.tecmint.com/extend-and-reduce-lvms-in-linux/
+pvcreate /dev/sda1
+vgextend vg_tecmint /dev/sda1
+vgs
+pvscan
+vgdisplay
+There are 4607 free PE available = 18GB Free space available. So we can expand our logical volume up-to 18GB more. Let us use the PE size to extend.
+
 #########
 $ resize2fs /dev/mapper/VolGroup-lv_home 80G
 
