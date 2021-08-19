@@ -1,0 +1,70 @@
+https://www.debuntu.org/how-to-managing-services-with-update-rc-d/
+As you can see, for runlevels 0, 1 and 6 there is a K at the beginning of the link, for runlevels 2, 3, 4 and 5, there is a S. Those two letters stands for Kill and Start
+
+Linux services can be started, stopped and reloaded with the use of scripts stocked in /etc/init.d/.
+However, during start up or when changing runlevel, those scripts are searched in /etc/rcX.d/ where X is the runlevel number.
+ls -l /etc/rc?.d/*apache2
+
+update-rc.d apache2 defaults 91
+
+To start a daemon at startup:
+update-rc.d service_name defaults
+
+To remove:
+update-rc.d -f service_name remove
+
+Remove all links for a script (assuming foobar has been deleted already):
+update-rc.d foobar remove
+
+Example of disabling a service:
+update-rc.d foobar disable
+
+Example of a command for installing a system initialization-and-shutdown script:
+update-rc.d foobar defaults
+
+Example of a command for disabling a system initialization-and-shutdown script:
+update-rc.d foobar disable
+
+/usr/sbin/update-rc.d zookeeper defaults
+/usr/sbin/update-rc.d zookeeper enable 2 3 5
+To extend the above example, we can specify exactly which RunLevel apache2 will be started and stopped.
+update-rc.d apache2 start 10 2 3 4 5 . stop 90 0 1 6 .
+
+sudo systemctl enable minidlna.service
+sudo systemctl is-enabled minidlna.service
+sudo systemctl is-active minidlna.service
+sudo systemctl disable minidlna.service
+systemctl list-units
+systemctl demon-reload
+
+
+
+file /etc/systemd/system/multi-user.target.wants/sshd.service
+[Unit]
+Description=OpenSSH server daemon
+Documentation=man:sshd(8) man:sshd_config(5)
+After=network.target sshd-keygen.target
+Wants=sshd-keygen.target
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/crypto-policies/back-ends/opensshserver.config
+EnvironmentFile=-/etc/sysconfig/sshd
+ExecStart=/usr/sbin/sshd -D $OPTIONS $CRYPTO_POLICY
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target
+
+In ubuntu version 18.04 TLS, I found that update-rc.d does not work fine if there is no specific comment block in the start script that looks like this:
+### BEGIN INIT INFO
+# Provides: myprogram
+# Required-Start: $ local_fs $ remote_fs $ syslog $ network $ time
+# Required-Stop: $ local_fs $ remote_fs $ syslog $ network
+# Default-start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: myprogram some description
+### END INIT INFO
